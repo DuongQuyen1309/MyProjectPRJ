@@ -9,5 +9,24 @@ package model.Planning;
  * @author Duong Minh Quyen
  */
 public class Product {
+    private int prid;
+    private String prname;
+
+    public int getPrid() {
+        return prid;
+    }
+
+    public void setPrid(int prid) {
+        this.prid = prid;
+    }
+
+    public String getPrname() {
+        return prname;
+    }
+
+    public void setPrname(String prname) {
+        this.prname = prname;
+    }
     
+
 }

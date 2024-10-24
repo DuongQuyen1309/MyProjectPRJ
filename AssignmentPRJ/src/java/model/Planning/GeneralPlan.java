@@ -4,6 +4,8 @@
  */
 package model.Planning;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Duong Minh Quyen
@@ -14,6 +16,34 @@ public class GeneralPlan {
     private Product product;
     private int quantity;
     private float estimatedeffort;
+    private int completedamount;
+    private int remainedamount;
+    private ArrayList<DetailProPlan> detailplanlist = new ArrayList<>();
+
+    public int getCompletedamount() {
+        return completedamount;
+    }
+
+    public void setCompletedamount(int completedamount) {
+        this.completedamount = completedamount;
+    }
+
+    public int getRemainedamount() {
+        return remainedamount;
+    }
+
+    public void setRemainedamount(int remainedamount) {
+        this.remainedamount = remainedamount;
+    }
+
+    public ArrayList<DetailProPlan> getDetailplanlist() {
+        return detailplanlist;
+    }
+
+    public void setDetailplanlist(ArrayList<DetailProPlan> detailplanlist) {
+        this.detailplanlist = detailplanlist;
+    }
+    
 
     public int getGpid() {
         return gpid;

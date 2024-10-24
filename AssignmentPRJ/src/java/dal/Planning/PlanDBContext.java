@@ -12,7 +12,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Planning.Plan;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import model.Planning.Attendance;
+import model.Planning.Department;
 import model.Planning.GeneralPlan;
+import model.Planning.Plan;
+import model.Planning.DetailProPlan;
+import model.Planning.Product;
+import model.Planning.WorkAssignmentEmp;
+import model.auth.User;
+import model.humanresource.Employee;
 
 /**
  *
@@ -96,4 +106,162 @@ public class PlanDBContext extends DBContext<Plan> {
         }
 
     }
+
+    public ArrayList<Plan> listBasePlan() {
+        ArrayList<Plan> ps = new ArrayList<>();
+        PreparedStatement stm = null;
+        String sql = "SELECT [pid]\n"
+                + "      ,[pname]\n"
+                + "      ,[start]\n"
+                + "      ,[end]\n"
+                + "      ,[did]\n"
+                + "      ,[status]\n"
+                + "      ,[createdby]\n"
+                + "  FROM [Plan]";
+        try {
+            stm = connection.prepareCall(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Plan p = new Plan();
+                p.setPid(rs.getInt("pid"));
+                p.setPname(rs.getNString("pname"));
+                p.setStart(rs.getDate("start"));
+                p.setEnd(rs.getDate("end"));
+
+                Department d = new Department();
+                d.setDid(rs.getString("did"));
+                p.setDept(d);
+
+                p.setStatus(rs.getString("status"));
+
+                User u = new User();
+                u.setDisplayname(rs.getString("createdby"));
+                p.setCreatedby(u);
+
+                ps.add(p);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            stm.close();
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return ps;
+    }
+
+    public ArrayList<Plan> listProductsInGeneralPlan(int planID) {
+        ArrayList<Plan> information = new ArrayList<>();
+        PreparedStatement stm = null;
+        String sql = "SELECT p.pid, p.pname, p.[start], p.[end], p.[status], d.did, d.dname,\n"
+                + "gp.gpid, gp.prid, gp.quantity as gp_quantity,pr.prname,\n"
+                + "dpp.dppid, dpp.[date], dpp.[sid], dpp.quantity as dpp_quantity,\n"
+                + "we.waeid,we.orderdquantity, att.actualquantity, att.alpha\n"
+                + "FROM [Plan] p \n"
+                + "LEFT JOIN Department d ON p.did = d.did\n"
+                + "LEFT JOIN GeneralPlan gp ON p.pid = gp.pid\n"
+                + "INNER JOIN Product pr on gp.prid = pr.prid\n"
+                + "LEFT JOIN DetailProPlan dpp ON gp.gpid = dpp.gpid \n"
+                + "LEFT JOIN WorkAssignmentEmp we ON dpp.dppid = we.dppid \n"
+                + "LEFT JOIN Attendance att ON we.waeid = att.waeid\n"
+                + "where p.pid = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, planID);
+            ResultSet rs = stm.executeQuery();
+
+            Plan p = new Plan();
+            p.setPid(-1);
+            GeneralPlan gp = new GeneralPlan();
+            gp.setGpid(-1);
+            DetailProPlan dpp = new DetailProPlan();
+            dpp.setDppid(-1);
+            while (rs.next()) {
+                int pid = rs.getInt("pid");
+                if (pid != p.getPid()) {
+                    p = new Plan();
+                    p.setPid(pid);
+                    p.setPname(rs.getNString("pname"));
+                    p.setStart(rs.getDate("start"));
+                    p.setEnd(rs.getDate("end"));
+                    p.setStatus(rs.getString("status"));
+
+                    Department d = new Department();
+                    d.setDid(rs.getString("did"));
+                    d.setDname(rs.getString("dname"));
+                    p.setDept(d);
+                    p.setGeneralplan(new ArrayList<>());
+                    information.add(p);
+                }
+
+                int gpid = rs.getInt("gpid");
+                if (gpid != gp.getGpid()) {
+                    gp = new GeneralPlan();
+                    gp.setGpid(gpid);
+                    gp.setPlan(p);
+
+                    Product pro = new Product();
+                    pro.setPrid(rs.getInt("prid"));
+                    pro.setPrname(rs.getNString("prname"));
+                    gp.setProduct(pro);
+
+                    gp.setQuantity(rs.getInt("gp_quantity"));
+                    gp.setDetailplanlist(new ArrayList<>());
+                    p.getGeneralplan().add(gp);
+                }
+
+                int dppid = rs.getInt("dppid");
+                if (dppid != dpp.getDppid()) {
+                    dpp = new DetailProPlan();
+                    dpp.setDppid(dppid);
+                    dpp.setDate(rs.getDate("date"));
+                    dpp.setSid(rs.getInt("sid"));
+                    dpp.setQuantity(rs.getInt("dpp_quantity"));
+                    gp.getDetailplanlist().add(dpp);
+                    dpp.setWorklist(new ArrayList<>());
+                }
+
+                WorkAssignmentEmp wae = new WorkAssignmentEmp();
+                wae.setOrderquantity(rs.getInt("orderdquantity"));
+                wae.setWaeid(rs.getInt("waeid"));
+
+                Attendance att = new Attendance();
+                att.setActualquantity(rs.getInt("actualquantity"));
+                att.setAlpha(rs.getFloat("alpha"));
+                wae.setAttendedPerson(att);
+
+                dpp.getWorklist().add(wae);
+            }
+            for (int i = 0; i < information.size(); i++) {
+                for (int j = 0; j < information.get(i).getGeneralplan().size(); j++) {
+                    int sumgeneralplan = 0;
+                    for (int m = 0; m < information.get(i).getGeneralplan().get(j).getDetailplanlist().size(); m++) {
+                        DetailProPlan tempdpp = information.get(i).getGeneralplan().get(j).getDetailplanlist().get(m);
+                        for (int n = 0; n < tempdpp.getWorklist().size(); n++) {                         
+                            int amount = tempdpp.getWorklist().get(n).getAttendedPerson().getActualquantity();
+                            sumgeneralplan += amount;         
+                        }
+                    }
+                    information.get(i).getGeneralplan().get(j).setCompletedamount(sumgeneralplan);
+                    int remaingeneralplan = information.get(i).getGeneralplan().get(j).getQuantity() - sumgeneralplan;
+                    information.get(i).getGeneralplan().get(j).setRemainedamount(remaingeneralplan);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                stm.close();
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return information;
+    }
+
 }

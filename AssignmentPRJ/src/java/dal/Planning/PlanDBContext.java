@@ -241,9 +241,9 @@ public class PlanDBContext extends DBContext<Plan> {
                     int sumgeneralplan = 0;
                     for (int m = 0; m < information.get(i).getGeneralplan().get(j).getDetailplanlist().size(); m++) {
                         DetailProPlan tempdpp = information.get(i).getGeneralplan().get(j).getDetailplanlist().get(m);
-                        for (int n = 0; n < tempdpp.getWorklist().size(); n++) {                         
+                        for (int n = 0; n < tempdpp.getWorklist().size(); n++) {
                             int amount = tempdpp.getWorklist().get(n).getAttendedPerson().getActualquantity();
-                            sumgeneralplan += amount;         
+                            sumgeneralplan += amount;
                         }
                     }
                     information.get(i).getGeneralplan().get(j).setCompletedamount(sumgeneralplan);
@@ -264,4 +264,51 @@ public class PlanDBContext extends DBContext<Plan> {
         return information;
     }
 
+    public ArrayList<Plan> listGeneralPlanfromPlan(int PlanID) {
+        ArrayList<Plan> gplans = new ArrayList<>();
+        PreparedStatement stm = null;
+        String sql = "select p.pid, p.pname, p.[start], p.[end], gp.gpid, gp.prid, pr.prname, gp.quantity\n"
+                + "from [Plan] p join GeneralPlan gp on p.pid = gp.pid\n"
+                + "join Product pr on pr.prid = gp.prid\n"
+                + "where p.pid = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, PlanID);
+            ResultSet rs = stm.executeQuery();
+            Plan p = new Plan();
+            p.setPid(-1);
+            while (rs.next()) {
+                int pid = rs.getInt("pid");
+                if (pid != p.getPid()) {
+                    p = new Plan();
+                    p.setPid(pid);
+                    p.setPname(rs.getNString("pname"));
+                    p.setStart(rs.getDate("start"));
+                    p.setEnd(rs.getDate("end"));
+                    p.setGeneralplan(new ArrayList<>());
+                    gplans.add(p);
+                }
+                GeneralPlan gp = new GeneralPlan();
+                gp.setGpid(rs.getInt("gpid"));
+
+                Product pro = new Product();
+                pro.setPrid(rs.getInt("prid"));
+                pro.setPrname(rs.getNString("prname"));
+                gp.setProduct(pro);
+                gp.setQuantity(rs.getInt("quantity"));
+                p.getGeneralplan().add(gp);
+            } 
+        }catch (SQLException ex) {
+            Logger.getLogger(PlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            stm.close();
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return gplans;
+    }
+
+    
 }

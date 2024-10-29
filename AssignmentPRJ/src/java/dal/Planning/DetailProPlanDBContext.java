@@ -64,7 +64,10 @@ public class DetailProPlanDBContext extends DBContext<DetailProPlan> {
             ResultSet rs = stm.executeQuery();
             int count=0;
             while(rs.next()){
-                count=count+1;
+                Integer t = rs.getObject("actualquantity", Integer.class);
+                if(t!=null){
+                    count=count+1;
+                }                      
             }
             if(count !=0 ){
                 check = true;

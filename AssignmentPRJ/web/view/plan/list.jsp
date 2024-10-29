@@ -3,7 +3,7 @@
     Created on : Oct 22, 2024, 11:28:47 PM
     Author     : Duong Minh Quyen
 --%>
-<style><%@include file="/view/plan/liststyle.css"%></style>
+<style><%@include file="/view/css/liststyle.css"%></style>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,17 +14,28 @@
         <link href="liststyle.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <div id="header">
+            <h1>ABC Company</h1>
+            <h2>----Specializing in bamboo and rattan products----</h2>
+        </div>
+        <div>
+            <ul id="tabbar">
+                <li><a style="color: #f6f7f6" href="../view/headplanning">Home</a></li>
+                <li style="color: #f6f7f6">${sessionScope.account.displayname}</li>
+                <li><a style="color: #f6f7f6" href="../logout">Logout</a></li>
+            </ul>
+        </div>
         <table border="1px">
             <tr>
-                <td>plan id</td>
-                <td>plan name</td>
-                <td>start</td>
-                <td>end</td>
-                <td>did</td>
-                <td>status</td>
-                <td>created by</td>
-                <td>overview about plan</td>
-                <td>detail plan </td>
+                <td>Plan ID</td>
+                <td>Plan Name</td>
+                <td>Start</td>
+                <td>End</td>
+                <td>Department ID</td>
+                <td>Status</td>
+                <td>Created By</td>
+                <td>Overview About Plan</td>
+                <td>Detail Plan </td>
             </tr>
             <c:forEach items="${requestScope.plans}" var="pl">
                 <tr>
@@ -42,9 +53,7 @@
                         <a href="../productionplan/detail/create?id=${pl.pid}">Detail</a>
                     </td>
                 </tr>
-            </c:forEach>                   
-
-
-
+            </c:forEach>   
+        </table>                
     </body>
 </html>

@@ -60,11 +60,12 @@ public class PlanCreateController extends BaseRBACController {
         {
             PlanDBContext db = new PlanDBContext();
             db.insert(plan);
-            resp.getWriter().println("your plan has been added!");
+            resp.sendRedirect("list");
         }
         else
         {
             resp.getWriter().println("your plan does not have any headers! it is not allowed!");
+            resp.sendRedirect("create");
         }
         
     }

@@ -1,0 +1,149 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Oct 25, 2024, 11:47:22 PM
+    Author     : Duong Minh Quyen
+*/
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.table-container {
+    width: 70%;
+    height: 60%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.unfixed-table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    overflow-y: auto;
+}
+
+.unfixed-table th, .unfixed-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.unfixed-table thead {
+    background-color: #68d3dc;
+    color: black;
+}
+
+.unfixed-table th {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.unfixed-table td {
+    font-size: 14px;
+    background-color: #f9f9f9;
+}
+
+.unfixed-table tr:nth-child(even) td {
+    background-color: #f1f1f1;
+}
+input[type="text"] {
+    width: 90%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #68d3dc;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .table-container {
+        padding: 10px;
+    }
+    .unfixed-table th, .unfixed-table td {
+        padding: 8px;
+    }
+    input[type="text"] {
+        width: 100%;
+    }
+}
+#header {
+    padding: 5px;
+    text-align: center;
+}
+
+#tabbar {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+}
+
+#tabbar li {
+    margin: 10px;
+    padding: 5px;
+    background-color: #68d3dc;
+}
+h1 {
+    color: #333;
+    font-family: cursive;
+    font-size: 3em;
+}
+
+h2 {
+    color: #666;
+    font-style: italic;
+    font-size: 15px;
+}
+
+div {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+    color: #68d3dc;
+}
+#maso{
+    width:5%;
+    padding:10px;
+    color:white;
+    background-color:#68d3dc; 
+}

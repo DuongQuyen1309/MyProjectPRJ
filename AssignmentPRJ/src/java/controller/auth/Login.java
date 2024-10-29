@@ -28,9 +28,14 @@ public class Login extends HttpServlet {
         
         if(account != null){         
             //Chen duong link cua tung phong ban vao day
-            req.getSession().setAttribute("account", account);        
+            req.getSession().setAttribute("account", account);   
+            if(account.getUsername().equals("tpkh")){
+                resp.sendRedirect("view/headplanning");
+            } else if(account.getUsername().equals("nvkh")){
+                resp.sendRedirect("view/officerplanning");
+            }           
         } else {
-            //Chen duong linh dang nhap lai vao day
+            resp.sendRedirect("login");
         }
     }
 

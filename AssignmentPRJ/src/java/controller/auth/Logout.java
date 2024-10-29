@@ -19,14 +19,14 @@ public class Logout extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().setAttribute("account", null);
-        req.getRequestDispatcher("login").forward(req, resp);
+        resp.sendRedirect("login");
 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().setAttribute("account", null);
-        req.getRequestDispatcher("login").forward(req, resp);
+        resp.sendRedirect("login");
     }
     
 }

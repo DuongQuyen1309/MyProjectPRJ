@@ -6,13 +6,26 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<style><%@include file="/view/css/inforplan.css"%></style>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="../css/inforplan.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <div id="header">
+            <h1>ABC Company</h1>
+            <h2>----Specializing in bamboo and rattan products----</h2>
+        </div>
+        <div>
+            <ul id="tabbar">
+                <li><a style="color: #f6f7f6" href="../view/headplanning">Home</a></li>
+                <li style="color: #f6f7f6">${sessionScope.account.displayname}</li>
+                <li><a style="color: #f6f7f6" href="../logout">Logout</a></li>
+            </ul>
+        </div>
         <table border="1px">
             <tr>
                 <td>Plan ID</td>

@@ -24,6 +24,14 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>controller.auth.Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HeadPlanning</servlet-name>
+        <servlet-class>controller.Planning.HeadPlanning</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OfficerPlanning</servlet-name>
+        <servlet-class>controller.Planning.OfficerPlanning</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -47,5 +55,13 @@
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HeadPlanning</servlet-name>
+        <url-pattern>/view/headplanning</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OfficerPlanning</servlet-name>
+        <url-pattern>/view/officerplanning</url-pattern>
     </servlet-mapping>
 </web-app>

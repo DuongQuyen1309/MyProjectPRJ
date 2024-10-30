@@ -30,6 +30,80 @@ import model.humanresource.Employee;
  */
 public class PlanDBContext extends DBContext<Plan> {
 
+    public Plan get(int planID) {
+        Plan plan = new Plan();
+        PreparedStatement stm = null;
+        String sql = "select p.pid, p.pname, p.[start], p.[end], p.[status], p.did\n"
+                + "from [Plan] p\n"
+                + "where p.pid=?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, planID);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                plan.setPid(rs.getInt("pid"));
+                plan.setPname(rs.getNString("pname"));
+                plan.setStart(rs.getDate("start"));
+                plan.setEnd(rs.getDate("end"));
+                plan.setStatus(rs.getString("status"));
+
+                Department dept = new Department();
+                dept.setDid(rs.getString("did"));
+                plan.setDept(dept);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return plan;
+    }
+
+    public void update(Plan model) {
+        try {
+            connection.setAutoCommit(false);
+            String sql_plan = "UPDATE [Plan]\n"
+                    + "   SET [end] = ?\n"
+                    + "      ,[did] = ?\n"
+                    + "      ,[status] = ?\n"
+                    + " WHERE pid= ?";
+            PreparedStatement stm_plan = connection.prepareStatement(sql_plan);
+            stm_plan.setDate(1, model.getEnd());
+            stm_plan.setString(2, model.getDept().getDid());
+            stm_plan.setString(3, model.getStatus());
+            stm_plan.setInt(4, model.getPid());
+
+            stm_plan.executeUpdate();
+
+            String sql_generalplan = "UPDATE [GeneralPlan]\n"
+                    + "   SET [quantity] = ?\n"
+                    + "      ,[estimatedeffort] = ?\n"
+                    + " WHERE [pid] = ? and prid = ?";
+
+            for (GeneralPlan gp : model.getGeneralplan()) {
+                PreparedStatement stm_generalplan = connection.prepareStatement(sql_generalplan);
+                stm_generalplan.setInt(1, gp.getQuantity());
+                stm_generalplan.setFloat(2, gp.getEstimatedeffort());
+                stm_generalplan.setInt(3, model.getPid());
+                stm_generalplan.setInt(4, gp.getProduct().getPrid());
+                stm_generalplan.executeUpdate();
+            }
+            connection.commit();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(PlanDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(PlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     public void insert(Plan model) {
         try {
             connection.setAutoCommit(false);
@@ -297,8 +371,8 @@ public class PlanDBContext extends DBContext<Plan> {
                 gp.setProduct(pro);
                 gp.setQuantity(rs.getInt("quantity"));
                 p.getGeneralplan().add(gp);
-            } 
-        }catch (SQLException ex) {
+            }
+        } catch (SQLException ex) {
             Logger.getLogger(PlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
@@ -310,5 +384,4 @@ public class PlanDBContext extends DBContext<Plan> {
         return gplans;
     }
 
-    
 }

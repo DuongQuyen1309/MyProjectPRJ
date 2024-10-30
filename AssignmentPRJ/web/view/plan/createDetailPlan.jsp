@@ -25,9 +25,9 @@
                 <li><a style="color: #f6f7f6" href="../logout">Logout</a></li>
             </ul>
         </div>
-        <div id="maso">
+        <span id="maso">
             PLAN ID: ${requestScope.planid}
-        </div>        
+        </span>        
 
         <form action="create" method="POST">
             <div class="table-container">

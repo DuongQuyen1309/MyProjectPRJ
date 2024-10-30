@@ -19,6 +19,15 @@ public class GeneralPlan {
     private int completedamount;
     private int remainedamount;
     private ArrayList<DetailProPlan> detailplanlist = new ArrayList<>();
+    private String note;
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
     public int getCompletedamount() {
         return completedamount;

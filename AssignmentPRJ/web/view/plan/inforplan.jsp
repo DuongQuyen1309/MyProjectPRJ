@@ -48,7 +48,12 @@
                         </c:if>
                         <td>${t.product.prname}</td>
                         <td>${t.completedamount}</td>
-                        <td>${t.remainedamount}</td>
+                        <c:if test="${t.remainedamount < 0}"> 
+                            <td>Complete and have leftover product</td>
+                        </c:if>
+                        <c:if test="${t.remainedamount >= 0}"> 
+                            <td>${t.remainedamount}</td>
+                        </c:if>                        
                     </tr>
                 </c:forEach>
             </c:forEach>

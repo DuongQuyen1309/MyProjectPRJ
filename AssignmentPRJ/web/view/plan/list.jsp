@@ -36,6 +36,7 @@
                 <td>Created By</td>
                 <td>Overview About Plan</td>
                 <td>Detail Plan </td>
+                <td>Update Plan</td>
             </tr>
             <c:forEach items="${requestScope.plans}" var="pl">
                 <tr>
@@ -52,7 +53,11 @@
                     <td>
                         <a href="../productionplan/detail/create?id=${pl.pid}">Detail</a>
                     </td>
+                    <td>
+                        <a href="update?id=${pl.pid}">Update</a>
+                    </td>
                 </tr>
+
             </c:forEach>   
         </table>                
     </body>

@@ -84,7 +84,7 @@ public class DetailProPlanCreate extends BaseRBACController {
 
     @Override
     protected void doAuthorizedGet(HttpServletRequest req, HttpServletResponse resp, User account) throws ServletException, IOException {
-       int id = Integer.parseInt(req.getParameter("id"));
+        int id = Integer.parseInt(req.getParameter("id"));
         
         PlanDBContext plandb = new PlanDBContext();
         ShiftDBContext shiftdb = new ShiftDBContext();
@@ -94,6 +94,7 @@ public class DetailProPlanCreate extends BaseRBACController {
 
         planWithGP = plandb.listGeneralPlanfromPlan(id);
         shifts = shiftdb.listShift();
+        Plan onePlan = plandb.get(id);
 
         Date startDate = planWithGP.get(0).getStart();
         Date endDate = planWithGP.get(0).getEnd();

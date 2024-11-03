@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Update Plan</title>
         <link href="../view/css/updatestyle.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
@@ -27,10 +27,10 @@
         </div>
         <form action="update" method="POST">
             <input type="hidden" name="id" value="${requestScope.plan.pid}"/>
-            Plan Name: ${requestScope.plan.pname} <br/>
+            Plan Name: ${requestScope.plan.pname} <br/><br/>
             <input type="hidden" name="name" value="${requestScope.plan.pname}"/>
             From: ${requestScope.plan.start}
-            <input type="hidden" name="from" value="${requestScope.plan.start}"/> <br/>
+            <input type="hidden" name="from" value="${requestScope.plan.start}"/> <br/><br/>
             To: <input type="date" name="to" value="${requestScope.plan.end}"/> <br/>
             Workshop: <select name="did">
                 <c:forEach items="${requestScope.depts}" var="d">

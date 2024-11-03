@@ -59,27 +59,28 @@ public class DetailProPlanCreate extends BaseRBACController {
                         String temp = req.getParameter(""+gp.getGpid()+"a"+s.getSid()+"a"+d);
                         
                         if(temp != null  && !temp.trim().isEmpty()){
-                            resp.getWriter().println(gp.getGpid()+" "+s.getSid()+" "+d);
+                            
                             int quantity = Integer.parseInt(temp);
-                            resp.getWriter().println(quantity);
+                            
                             if(dppdb.get(gp.getGpid(), s.getSid(), d) ==  null){
                                 dppdb.insert(gp.getGpid(), s.getSid(), d, quantity);
-                                resp.getWriter().println("done1");
+                                
                             }
                             if(dppdb.get(gp.getGpid(), s.getSid(), d) !=  null 
                                     && dppdb.checkActualAmountWAE(gp.getGpid(), s.getSid(), d) == false){
-                                resp.getWriter().println("done2");
+                                
                                 dppdb.update(gp.getGpid(), s.getSid(), d, quantity);
                             }
                             if(dppdb.get(gp.getGpid(), s.getSid(), d) !=  null 
                                     && dppdb.checkActualAmountWAE(gp.getGpid(), s.getSid(), d) == true){
-                                    resp.getWriter().println("done3");
+                                    
                             }
                         }                                              
                     }
                 }
             }
         }
+        resp.sendRedirect("../../plan/list");
     }
 
     @Override

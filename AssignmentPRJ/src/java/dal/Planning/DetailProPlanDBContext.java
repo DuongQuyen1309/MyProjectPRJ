@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class DetailProPlanDBContext extends DBContext<DetailProPlan> {
 
     public DetailProPlan get(int gpid, int sid, Date date) {
-        
+
         PreparedStatement stm = null;
         String sql = "select gpid, [sid], [date]\n"
                 + "from DetailProPlan\n"
@@ -62,20 +62,20 @@ public class DetailProPlanDBContext extends DBContext<DetailProPlan> {
             stm.setInt(2, sid);
             stm.setDate(3, date);
             ResultSet rs = stm.executeQuery();
-            int count=0;
-            while(rs.next()){
+            int count = 0;
+            while (rs.next()) {
                 Integer t = rs.getObject("actualquantity", Integer.class);
-                if(t!=null){
-                    count=count+1;
-                }                      
+                if (t != null) {
+                    count = count + 1;
+                }
             }
-            if(count !=0 ){
+            if (count != 0) {
                 check = true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DetailProPlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return check;
     }
 
@@ -98,11 +98,11 @@ public class DetailProPlanDBContext extends DBContext<DetailProPlan> {
             stm.setInt(3, sid);
             stm.setInt(4, quantity);
             int rowsInserted = stm.executeUpdate();
-        if (rowsInserted > 0) {
-            System.out.println("Insert successful, rows affected: " + rowsInserted);
-        } else {
-            System.out.println("Insert failed, no rows affected.");
-        }
+            if (rowsInserted > 0) {
+                System.out.println("Insert successful, rows affected: " + rowsInserted);
+            } else {
+                System.out.println("Insert failed, no rows affected.");
+            }
 //            stm.executeUpdate();
 
         } catch (SQLException ex) {
@@ -123,7 +123,7 @@ public class DetailProPlanDBContext extends DBContext<DetailProPlan> {
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, quantity);
-            stm.setInt(2, gpid);    
+            stm.setInt(2, gpid);
             stm.setDate(3, date);
             stm.setInt(4, sid);
 
@@ -170,5 +170,28 @@ public class DetailProPlanDBContext extends DBContext<DetailProPlan> {
             Logger.getLogger(DetailProPlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return dpplans;
+    }
+
+    public ArrayList<DetailProPlan> listFullAttDPPFronPlan(int planID) {
+        ArrayList<DetailProPlan> dpplist = new ArrayList<>();
+        return dpplist;
+    }
+
+    public int getDPPID(int gpid, int sid, Date date) {
+        PreparedStatement stm = null;
+        String sql = "select dpp.dppid\n"
+                + "from DetailProPlan dpp \n"
+                + "where dpp.gpid=? and dpp.[sid]=? and dpp.[date]=?";
+        try {
+            stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                int dppid = rs.getInt("dppid");
+                return dppid;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DetailProPlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
     }
 }

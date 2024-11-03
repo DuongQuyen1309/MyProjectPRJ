@@ -22,12 +22,12 @@
             <ul id="tabbar">
                 <li><a style="color: #f6f7f6" href="../view/headplanning">Home</a></li>               
                 <li style="color: #f6f7f6">${sessionScope.account.displayname}</li>
-                <li><a style="color: #f6f7f6" href="../logout">Logout</a></li>
+                <li><a style="color: #f6f7f6" href="../../logout">Logout</a></li>
             </ul>
         </div>
-        <span id="maso">
+        <div id="maso">
             PLAN ID: ${requestScope.planid}
-        </span>        
+        </div>        
 
         <form action="create" method="POST">
             <div class="table-container">

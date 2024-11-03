@@ -40,6 +40,18 @@
         <servlet-name>WorkAssignmentCreate</servlet-name>
         <servlet-class>controller.Planning.WorkAssignmentCreate</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManagerA</servlet-name>
+        <servlet-class>controller.managerws.ManagerA</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PlanForA</servlet-name>
+        <servlet-class>controller.Planning.PlanForA</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>listWAE</servlet-name>
+        <servlet-class>controller.Planning.listWAE</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -79,5 +91,17 @@
     <servlet-mapping>
         <servlet-name>WorkAssignmentCreate</servlet-name>
         <url-pattern>/workassignment/create</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManagerA</servlet-name>
+        <url-pattern>/managerA</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PlanForA</servlet-name>
+        <url-pattern>/plan/listforA</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>listWAE</servlet-name>
+        <url-pattern>/view/listWAE</url-pattern>
     </servlet-mapping>
 </web-app>

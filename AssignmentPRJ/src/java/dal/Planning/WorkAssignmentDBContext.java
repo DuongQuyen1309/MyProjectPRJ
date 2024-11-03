@@ -60,8 +60,9 @@ public class WorkAssignmentDBContext extends DBContext<WorkAssignmentEmp> {
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, gpid);
-            stm.setInt(2, sid);
-            stm.setDate(3, date);
+            stm.setDate(2, date);
+            stm.setInt(3, sid);
+
             stm.setInt(4, eid);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
@@ -79,11 +80,11 @@ public class WorkAssignmentDBContext extends DBContext<WorkAssignmentEmp> {
         } catch (SQLException ex) {
             Logger.getLogger(WorkAssignmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            stm.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(WorkAssignmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            stm.close();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(WorkAssignmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         return null;
     }
 
@@ -138,11 +139,11 @@ public class WorkAssignmentDBContext extends DBContext<WorkAssignmentEmp> {
         } catch (SQLException ex) {
             Logger.getLogger(WorkAssignmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            stm.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(WorkAssignmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            stm.close();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(WorkAssignmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     public void update(int dppid, int eid, int orderquantity) {
@@ -159,10 +160,10 @@ public class WorkAssignmentDBContext extends DBContext<WorkAssignmentEmp> {
         } catch (SQLException ex) {
             Logger.getLogger(WorkAssignmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            stm.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(WorkAssignmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            stm.close();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(WorkAssignmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 }

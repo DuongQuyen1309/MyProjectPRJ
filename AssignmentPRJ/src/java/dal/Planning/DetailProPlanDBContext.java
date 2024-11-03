@@ -177,21 +177,26 @@ public class DetailProPlanDBContext extends DBContext<DetailProPlan> {
         return dpplist;
     }
 
-    public int getDPPID(int gpid, int sid, Date date) {
+    public DetailProPlan getDPPID(int gpid, int sid, Date date) {
         PreparedStatement stm = null;
         String sql = "select dpp.dppid\n"
                 + "from DetailProPlan dpp \n"
                 + "where dpp.gpid=? and dpp.[sid]=? and dpp.[date]=?";
         try {
             stm = connection.prepareStatement(sql);
+            
+            stm.setInt(1, gpid);
+            stm.setInt(2, sid);
+            stm.setDate(3, new java.sql.Date(date.getTime()));
             ResultSet rs = stm.executeQuery();
             if(rs.next()){
-                int dppid = rs.getInt("dppid");
-                return dppid;
+                DetailProPlan d = new DetailProPlan();
+                d.setDppid(rs.getInt("dppid"));
+                return d;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DetailProPlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return -1;
+        return null;
     }
 }

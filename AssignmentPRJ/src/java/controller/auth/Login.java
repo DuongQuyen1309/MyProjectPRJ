@@ -31,9 +31,9 @@ public class Login extends HttpServlet {
             req.getSession().setAttribute("account", account);   
             if(account.getUsername().equals("tpkh")){
                 resp.sendRedirect("view/headplanning");
-            } else if(account.getUsername().equals("nvkh")){
-                resp.sendRedirect("view/officerplanning");
-            }           
+            } else if(account.getUsername().equals("qwsa")){
+                resp.sendRedirect("managerA");
+            }          
         } else {
             resp.sendRedirect("login");
         }

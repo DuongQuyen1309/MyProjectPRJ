@@ -37,6 +37,7 @@
                 <td>Overview About Plan</td>
                 <td>Detail Plan </td>
                 <td>Update Plan</td>
+                <td>Work Assignment</td>
             </tr>
             <c:forEach items="${requestScope.plans}" var="pl">
                 <tr>
@@ -55,6 +56,9 @@
                     </td>
                     <td>
                         <a href="update?id=${pl.pid}">Update</a>
+                    </td>
+                    <td>
+                        <a href="../view/listWAE?id=${pl.pid}">Work Assignment</a>
                     </td>
                 </tr>
 

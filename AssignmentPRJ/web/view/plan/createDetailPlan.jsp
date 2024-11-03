@@ -20,7 +20,7 @@
         </div>
         <div>
             <ul id="tabbar">
-                <li><a style="color: #f6f7f6" href="../view/headplanning">Home</a></li>               
+                <li><a style="color: #f6f7f6" href="../../view/headplanning">Home</a></li>               
                 <li style="color: #f6f7f6">${sessionScope.account.displayname}</li>
                 <li><a style="color: #f6f7f6" href="../../logout">Logout</a></li>
             </ul>

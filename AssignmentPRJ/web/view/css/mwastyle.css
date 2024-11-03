@@ -1,0 +1,89 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Nov 3, 2024, 10:30:39 PM
+    Author     : Duong Minh Quyen
+*/
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+#header{
+    padding: 5px;
+    text-align: center;
+}
+#tabbar{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+}
+#tabbar li{
+    margin: 10px;
+    padding: 5px;
+    background-color: #68d3dc;
+
+}
+h1 {
+    color: #333;
+    font-family: cursive;
+    font-size: 3em;
+}
+
+h2 {
+    color: #666;
+    font-style: italic;
+    font-size:15px;
+}
+
+div {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+#content{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 410px;
+}
+#content div{
+    margin: 10px;
+    width:40%;
+    padding: 10px;
+}
+#content li{
+    margin: 10px;
+}
+h4 {
+    color: #333;
+    font-size: 18px;
+    border-bottom: 2px solid #68d3dc;
+    padding-bottom: 5px;
+    text-align: center;
+}
+a {
+    text-decoration: none;
+    color: #68d3dc;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+footer{
+    padding: 1vh 0vh 0vh 0vh;
+    background-color: #68d3dc;
+    color: white;
+    text-align: center;
+}
+

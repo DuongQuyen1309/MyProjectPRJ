@@ -384,4 +384,48 @@ public class PlanDBContext extends DBContext<Plan> {
         return gplans;
     }
 
+    public ArrayList<Plan> listPlanFromWS(String did) {
+        PreparedStatement stm = null;
+        ArrayList<Plan> list = new ArrayList<>();
+        String sql = "SELECT [pid]\n"
+                + "      ,[pname]\n"
+                + "      ,[start]\n"
+                + "      ,[end]\n"
+                + "      ,[did]\n"
+                + "      ,[status]\n"
+                + "      ,[createdby]\n"
+                + "  FROM [Plan]\n"
+                + "  WHERE did = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, did);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Plan p = new Plan();
+                p.setPid(rs.getInt("pid"));
+                p.setPname(rs.getString("pname"));
+                p.setStart(rs.getDate("start"));
+                p.setEnd(rs.getDate("end"));
+                
+                Department d= new Department();
+                d.setDid(rs.getString("did"));
+                p.setDept(d);
+                
+                User u = new User();
+                u.setDisplayname(rs.getString("createdby"));
+                p.setCreatedby(u);
+                
+                p.setStatus(rs.getString("status"));
+                list.add(p);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            stm.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
 }
